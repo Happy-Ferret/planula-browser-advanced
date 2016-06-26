@@ -3,13 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Aero tweaks */
-html[os="windows"] {
-  -moz-appearance: -moz-win-borderless-glass;
-  background: transparent;
-}
 [os="windows"] .tabstrip {
-  background: transparent;
-  margin-top: 5px;
   -moz-window-dragging: drag;
 }
 [os="windows"] .tabstrip .tab {
