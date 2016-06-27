@@ -1,0 +1,3 @@
+[submodule "lib/sww.js"]
+	path = lib/sww.js
+	url = https://github.com/fxos-components/serviceworkerware

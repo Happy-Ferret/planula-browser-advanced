@@ -26,6 +26,14 @@
     <script src='ui.js'></script>
     <script src='lib/require.js/require.js' defer='defer'></script>
     <script src='app.js' defer='defer'></script>
+    <script>
+      const SWLOG = 'ServiceWorker Registration';
+      navigator.serviceWorker.register('sw.js').then(function(registration) {
+        dump(SWLOG + ' success for: ' + registration.scope + '\n');
+      }).catch(function(error) {
+        dump(SWLOG + ' ' + error + '\n');
+      });
+    </script>
   </head>
 
   <body>
