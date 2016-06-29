@@ -1,49 +1,34 @@
 'use strict';
 
-importScripts('lib/sww.js/dist/sww.js');
+var CACHE_NAME = 'browserui-cache';
 
-function AutoCache(cacheName, options, missPolicy) {
-  this.cacheName = 'offline';
-}
+let cachePromise = caches.open(CACHE_NAME);
 
-AutoCache.prototype.onFetch = function at_onFetch(request, response) {
-  // If another middleware layer already have a response, the simple cache
-  // just pass through the response and does nothing.
-  if (response) {
-    return Promise.resolve(response);
-  }
+self.addEventListener('fetch', function(event) {
+  dump("fetch "+event.request.url+"\n");
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        // Cache hit - return response
+        if (response) {
+  dump("hit cache\n");
+          return response;
+        }
 
-  var clone = request.clone();
-  var _this = this;
-  return this.ensureCache().then(function(cache) {
-    return cache.match(clone, _this.options).then(function(res) {
-      if (res) {
-        return res;
+        // Otherwise go over network
+        return fetch(event.request).then(function(response) {
+          // And cache it if the response is successful before
+          // handing the response over to the browser
+          if (parseInt(response.status) < 400) {
+            cachePromise.then(function(cache) {
+              cache.put(event.request, response.clone());
+  dump("success request, cached!\n");
+            });
+          }
+  dump("return response\n");
+          return response;
+        });
       }
-
-      return this.fetchAndCache(request, cache);
-    });
-  });
-};
-
-AutoCache.prototype.ensureCache = function at_ensureCache() {
-  if (!this.cacheRequest) {
-    this.cacheRequest = caches.open(this.cacheName);
-  }
-  return this.cacheRequest;
-};
-
-AutoCache.prototype.fetchAndCache = function at_fetchAndCache(request, cache) {
-  return fetch(request.clone()).then(function(response) {
-    if (parseInt(response.status) < 400) {
-      cache.put(request.clone(), response.clone());
-    }
-    return response;
-  });
-};
-
-
-var worker = new self.ServiceWorkerWare();
-worker.use(new AutoCache());
-worker.init();
-
+    )
+  );
+});
