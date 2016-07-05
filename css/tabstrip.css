@@ -23,14 +23,26 @@ html[os="windows"] {
   z-index: 999;
 }
 
+html[lwtheme="true"] .tabstrip {
+  background-color: transparent;
+}
+
 [os="osx"] .tabstrip:first-of-type {
   padding-top: 9px;
+}
+
+:root {
+  --tab-color: #444;
+  --tab-selected-color: black;
+}
+:root[os="linux"] {
+  --tab-color: black;
 }
 
 .tab {
   -moz-user-select: none;
   cursor: default;
-  color: #444;
+  color: var(--tab-color);
   height: 28px;
   border-style: solid;
   border-width: 0 28px;
@@ -42,38 +54,14 @@ html[os="windows"] {
   background-clip: border-box;
 }
 
-[os="linux"] .dummy-tab-curve {
-  /* These values are used in curvedTabs.js */
+/* This is used by tabstrip.js */ 
+.dummy-tab-curve {
   --curve-border: transparent;
-  --curve-gradient-start: #FBFBFB;
-  --curve-gradient-end: #EDEDED;
+  --curve-gradient-start: rgba(255, 255, 255, 0.6);
+  --curve-gradient-end: rgba(255, 255, 255, 0.6);
   --curve-hover-border: transparent;
-  --curve-hover-gradient-start: rgba(255,255,255,0.4);
-  --curve-hover-gradient-end: rgba(255,255,255,0.4);
-}
-
-[os="windows"] .dummy-tab-curve {
-  /* These values are used in curvedTabs.js */
-  --curve-border: transparent;
-  --curve-gradient-start: #FBFBFB;
-  --curve-gradient-end: #EDEDED;
-  --curve-hover-border: #AAA;
   --curve-hover-gradient-start: rgba(255, 255, 255, 0.4);
   --curve-hover-gradient-end: rgba(255, 255, 255, 0.4);
-}
-
-[os="osx"] .dummy-tab-curve {
-  /* These values are used in curvedTabs.js */
-  --curve-border: #AAA;
-  --curve-gradient-start: #FBFBFB;
-  --curve-gradient-end: #F1F1F1;
-  --curve-hover-border: #AAA;
-  --curve-hover-gradient-start: transparent;
-  --curve-hover-gradient-end: transparent;
-}
-
-[os="linux"] .tab {
-  color: black;
 }
 
 @media (min-resolution: 2dppx) {
@@ -85,7 +73,7 @@ html[os="windows"] {
 .tab.selected {
   z-index: 1001;
   border-image-source: -moz-element(#canvas-tab-selected);
-  color: black;
+  color: var(--tab-selected-color);
 }
 
 .tab:not(.selected):not(:hover) + .tab:not(.selected):not(:hover):not(:first-of-type) {

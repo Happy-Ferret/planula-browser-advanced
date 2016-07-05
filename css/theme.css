@@ -9,12 +9,21 @@
 
 :root {
   --hwd-pixel: 1px;
+
+  --chrome-color: black;
+  --chrome-background-color: white;
 }
 
 @media (min-resolution: 2dppx) {
   :root {
     --hwd-pixel: 0.5px;
   }
+}
+
+html {
+  color: var(--chrome-color);
+  background-color: var(--chrome-background-color);
+  background-image: var(--header-background-image);
 }
 
 [os="osx"] .toolbar:first-of-type {
