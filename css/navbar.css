@@ -19,6 +19,11 @@
   background-image: linear-gradient(#F1F1F1, #D3D3D3);
 }
 
+html[lwtheme="true"] .navbar {
+  background-image: none;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
 [os="osx"] .navbar {
   border-style: solid;
   border-width: var(--hwd-pixel) 0;
@@ -79,14 +84,21 @@
 .stop-button {    background-position: -90px   0px; }
 .menu-button {    background-position: -468px  0px; }
 
+:root {
+  --urlbar-background-color: white;
+  --urlbar-color: inherit;
+}
 .urlbar, .searchbar {
-  background-color: white;
+  background-color: var(--urlbar-background-color);
   border-radius: 3px;
   margin: 4px 6px 3px;
   border-style: solid;
   border-color: #B0AEB0;
   border-bottom-width: 1px;
   min-width: 0;
+}
+.urlbar input, .searchbar input {
+  color: var(--urlbar-color);
 }
 
 .searchbar {
