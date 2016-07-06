@@ -14,6 +14,11 @@
   --chrome-background-color: white;
 }
 
+/* Aero tweaks */
+:root[os="windows"] {
+  --chrome-background-color: transparent;
+}
+
 @media (min-resolution: 2dppx) {
   :root {
     --hwd-pixel: 0.5px;
@@ -24,6 +29,11 @@ html {
   color: var(--chrome-color);
   background-color: var(--chrome-background-color);
   background-image: var(--header-background-image);
+}
+
+/* Aero tweaks */
+html[os="windows"] {
+  -moz-appearance: -moz-win-borderless-glass;
 }
 
 [os="osx"] .toolbar:first-of-type {
